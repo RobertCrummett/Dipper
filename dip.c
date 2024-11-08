@@ -6,7 +6,8 @@
 #define M_PI 3.141592653589793238462643383279502884197169399375105820974944592307816
 #endif
 
-const int expected_argc = 11;
+const int stdout_precision = 10;
+const int expected_argc    = 11;
 const double magnetic_permeability = 4 * M_PI * 1e-7;
 
 typedef struct {
@@ -31,7 +32,7 @@ Vector incdec_to_unitvec(double inclination, double declination) {
 }
 
 void usage(char** argv) {
-	printf("[USAGE]: %s field_inclination field_declination magnetization_inclination magnetization_declination x_dipole y_dipole z_dipole\n", argv[0]);
+	printf("[USAGE]: %s field_inclination field_declination magnetization_inclination magnetization_declination x_dipole y_dipole z_dipole x_observation y_observation z_observation\n", argv[0]);
 	printf("[USAGE]: *_inclination in degrees\n");
 	printf("[USAGE]: *_declination in degrees\n");
 	fflush(stdout);
@@ -54,7 +55,7 @@ int main(int argc, char** argv) {
 		return 1;
 	}
 
-	printf("[INFO]: Program \"%s\"\n", argv[0]);
+	// printf("[INFO]: Program \"%s\"\n", argv[0]);
 
 	double field_inclination;
 	double field_declination;
@@ -74,16 +75,16 @@ int main(int argc, char** argv) {
 	sscanf(argv[9], "%lf", &observation.y);
 	sscanf(argv[10], "%lf", &observation.z);
 
-	printf("[INFO]: field inclination %lf degree\n", field_inclination);
-	printf("[INFO]: field declination %lf degree\n", field_declination);
-	printf("[INFO]: magnetization inclination %lf degree\n", magnetization_inclination);
-	printf("[INFO]: magnetization declination %lf degree\n", magnetization_declination);
-	printf("[INFO]: dipole easting  %lf meter\n", dipole.x);
-	printf("[INFO]: dipole northing %lf meter\n", dipole.y);
-	printf("[INFO]: dipole vertical %lf meter\n", dipole.z);
-	printf("[INFO]: observation easting %lf  meter\n", observation.x);
-	printf("[INFO]: observation northing %lf meter\n", observation.y);
-	printf("[INFO]: observation vertical %lf meter\n", observation.z);
+	// printf("[INFO]: field inclination %lf degree\n", field_inclination);
+	// printf("[INFO]: field declination %lf degree\n", field_declination);
+	// printf("[INFO]: magnetization inclination %lf degree\n", magnetization_inclination);
+	// printf("[INFO]: magnetization declination %lf degree\n", magnetization_declination);
+	// printf("[INFO]: dipole easting  %lf meter\n", dipole.x);
+	// printf("[INFO]: dipole northing %lf meter\n", dipole.y);
+	// printf("[INFO]: dipole vertical %lf meter\n", dipole.z);
+	// printf("[INFO]: observation easting %lf  meter\n", observation.x);
+	// printf("[INFO]: observation northing %lf meter\n", observation.y);
+	// printf("[INFO]: observation vertical %lf meter\n", observation.z);
 
 	if (observation.x == dipole.x && observation.y == dipole.y && observation.z == dipole.z) {
 		fprintf(stderr, "[ERROR]: Observation and dipole locations are the same\n");
@@ -117,9 +118,11 @@ int main(int argc, char** argv) {
 
 	double total_field = dot(background, bfield);
 
-	printf("[INFO]: B-field x %lf nT\n", bfield.x * 1e9);
-	printf("[INFO]: B-field y %lf nT\n", bfield.y * 1e9);
-	printf("[INFO]: B-field z %lf nT\n", bfield.z * 1e9);
-	printf("[INFO]: Total-field anomaly %lf nT\n", total_field * 1e9);
+	// printf("[INFO]: B-field x %lf nT\n", bfield.x * 1e9);
+	// printf("[INFO]: B-field y %lf nT\n", bfield.y * 1e9);
+	// printf("[INFO]: B-field z %lf nT\n", bfield.z * 1e9);
+	// printf("[INFO]: Total-field anomaly %lf nT\n", total_field * 1e9);
+	
+	fprintf(stdout, "%.*e\n", stdout_precision, total_field);
 	return 0;
 }
