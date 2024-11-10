@@ -2,5 +2,5 @@
 
 Quick start:
 ```console
-cc -o dip dip.c -lm
+cc -o main main.c -lm
 ```
